@@ -1,19 +1,18 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
   Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
-import { WelcomeSide } from "./components/WelcomeSide"
+import { 
+  AccessSide, 
+  AccessChange,
+  LoginForm,
+} from "./components/Access";
 
 const Login = (props) => {
-  const history = useHistory();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -29,47 +28,14 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
+    <Grid container justify="space-between">
       <Grid sm="5" item>
-        {WelcomeSide()}
+        {AccessSide()}
       </Grid>
-      <Grid sm="7" container item justify="center">
-        <Box>
-          <Grid container item>
-            <Typography>Don't have an account?</Typography>
-            <Button color="primary" onClick={() => history.push("/register")}>Register</Button>
-          </Grid>
-          <Grid>
-            <Typography>Welcome back!</Typography>
-          </Grid>
-          <form onSubmit={handleLogin}>
-            <Grid>
-              <Grid>
-                <FormControl margin="normal" required>
-                  <TextField
-                    aria-label="username"
-                    label="Username"
-                    name="username"
-                    type="text"
-                  />
-                </FormControl>
-              </Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  label="password"
-                  aria-label="password"
-                  type="password"
-                  name="password"
-                />
-              </FormControl>
-              <Grid>
-                <Button type="submit" variant="contained" size="large">
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
+      <Grid sm="7" container item direction="column" justify="space-around" alignItems="center">
+        {AccessChange({route: 'register'})}
+        {LoginForm(handleLogin)}
+        <Box></Box>
       </Grid>
     </Grid>
   );

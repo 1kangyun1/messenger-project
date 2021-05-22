@@ -8,15 +8,15 @@ const useStyles = makeStyles(() => ({
   root: {
     backgroundImage:`url(${background})`,
     backgroundSize:'cover',
-    height: '95vh'
+    height: '100vh'
   }
 }));
 
-export default function WelcomeImage() {
+export default function AccessSide() {
   const classes = useStyles();
 
   return (
-    <Box display={{ xs: 'none', sm: 'block' }} className={classes.root}>
+    <Box className={classes.root}>
       
     </Box>
   )
