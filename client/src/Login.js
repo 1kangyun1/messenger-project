@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import { WelcomeSide } from "./components/WelcomeSide"
 
 const Login = (props) => {
   const history = useHistory();
@@ -29,39 +30,47 @@ const Login = (props) => {
 
   return (
     <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
-        <form onSubmit={handleLogin}>
+      <Grid sm="5" item>
+        {WelcomeSide()}
+      </Grid>
+      <Grid sm="7" container item justify="center">
+        <Box>
+          <Grid container item>
+            <Typography>Don't have an account?</Typography>
+            <Button color="primary" onClick={() => history.push("/register")}>Register</Button>
+          </Grid>
           <Grid>
+            <Typography>Welcome back!</Typography>
+          </Grid>
+          <form onSubmit={handleLogin}>
             <Grid>
+              <Grid>
+                <FormControl margin="normal" required>
+                  <TextField
+                    aria-label="username"
+                    label="Username"
+                    name="username"
+                    type="text"
+                  />
+                </FormControl>
+              </Grid>
               <FormControl margin="normal" required>
                 <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
+                  label="password"
+                  aria-label="password"
+                  type="password"
+                  name="password"
                 />
               </FormControl>
+              <Grid>
+                <Button type="submit" variant="contained" size="large">
+                  Login
+                </Button>
+              </Grid>
             </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
+          </form>
+        </Box>
+      </Grid>
     </Grid>
   );
 };
