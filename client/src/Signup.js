@@ -37,11 +37,11 @@ const Login = (props) => {
 
   return (
     <Grid container justify="space-between">
-      <Grid sm="5" item>
+      <Grid sm={5} item>
         {AccessSide()}
       </Grid>
-      <Grid sm="7" container item spacing={5} >
-        <Grid m={1} container item direction="column" justify="center" alignItems="center">
+      <Grid sm={7} container item>
+        <Grid container item direction="column" alignItems="center">
         {AccessChange({route: 'login'})}
         </Grid>
         <Grid container item justify="center">

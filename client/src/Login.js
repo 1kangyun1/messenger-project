@@ -16,7 +16,7 @@ const Login = (props) => {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-
+    
     await login({ username, password });
   };
 
@@ -26,10 +26,10 @@ const Login = (props) => {
 
   return (
     <Grid container justify="space-between">
-      <Grid sm="5" item>
+      <Grid sm={5} item>
         {AccessSide()}
       </Grid>
-      <Grid sm="7" container item>
+      <Grid sm={7} container item>
         <Grid container item direction="column" justify="center" alignItems="center">
           {AccessChange({route: 'register'})}
         </Grid>

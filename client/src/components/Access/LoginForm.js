@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function LoginForm(handleLogin) {
+export default function LoginForm(props) {
   const classes = useStyles();
 
   return (
@@ -24,7 +24,7 @@ export default function LoginForm(handleLogin) {
       <Grid>
         <Typography className={classes.focus}>Welcome back!</Typography>
       </Grid>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={props.handleLogin}>
         <Grid container direction="column">
           <FormControl margin="normal" required>
             <TextField

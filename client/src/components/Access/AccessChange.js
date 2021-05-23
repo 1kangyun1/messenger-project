@@ -23,7 +23,8 @@ const preset = {
 
 const useStyles = makeStyles(() => ({
   routePadding: {
-    padding: '30px'
+    paddingTop: '25px',
+    paddingBottom: '10px'
   },
   text: {
     fontSize: '0.8rem',

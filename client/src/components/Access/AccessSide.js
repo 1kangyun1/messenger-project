@@ -13,7 +13,8 @@ const useStyles = makeStyles(() => ({
   image: {
     backgroundImage:`linear-gradient(#3A8DFF85 10%, #86B9FF 90%), url(${background})`,
     backgroundSize:'cover',
-    height: '100vh'
+    height: '100vh',
+    margin: '0',
   },
   text: {
     fontSize: '1.5rem',
