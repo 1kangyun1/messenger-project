@@ -8,15 +8,16 @@ const Messages = (props) => {
 
   return (
     <Box>
-      {messages.map((message) => {
+      {messages.reduceRight((arr, message) => {
+        console.log(message);
         const time = moment(message.createdAt).format("h:mm");
 
-        return message.senderId === userId ? (
+        return arr.concat(message.senderId === userId ? (
           <SenderBubble key={message.id} text={message.text} time={time} />
         ) : (
           <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
-        );
-      })}
+        ));
+      }, [])}
     </Box>
   );
 };
