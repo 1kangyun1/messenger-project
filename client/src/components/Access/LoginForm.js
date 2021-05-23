@@ -7,25 +7,33 @@ import {
   FormControl,
   TextField,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  focus: {
+    fontSize: '1.5rem'
+  }
+}));
+
 
 export default function LoginForm(handleLogin) {
+  const classes = useStyles();
+
   return (
     <Box width="60%">
       <Grid>
-        <Typography>Welcome back!</Typography>
+        <Typography className={classes.focus}>Welcome back!</Typography>
       </Grid>
       <form onSubmit={handleLogin}>
-        <Grid>
-          <Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                aria-label="username"
-                label="Username"
-                name="username"
-                type="text"
-              />
-            </FormControl>
-          </Grid>
+        <Grid container direction="column">
+          <FormControl margin="normal" required>
+            <TextField
+              aria-label="username"
+              label="Username"
+              name="username"
+              type="text"
+            />
+          </FormControl>
           <FormControl margin="normal" required>
             <TextField
               label="password"
@@ -34,11 +42,9 @@ export default function LoginForm(handleLogin) {
               name="password"
             />
           </FormControl>
-          <Grid>
-            <Button type="submit" variant="contained" size="large">
-              Login
-            </Button>
-          </Grid>
+          <Button type="submit" variant="contained" color="primary" size="large">
+            Login
+          </Button>
         </Grid>
       </form>
     </Box>

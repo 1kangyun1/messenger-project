@@ -1,10 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Box,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import { 
   AccessSide, 
@@ -32,10 +29,13 @@ const Login = (props) => {
       <Grid sm="5" item>
         {AccessSide()}
       </Grid>
-      <Grid sm="7" container item direction="column" justify="space-around" alignItems="center">
-        {AccessChange({route: 'register'})}
-        {LoginForm(handleLogin)}
-        <Box></Box>
+      <Grid sm="7" container item spacing={5} >
+        <Grid container item direction="column" justify="center" alignItems="center">
+          {AccessChange({route: 'register'})}
+        </Grid>
+        <Grid container item justify="center">
+          {LoginForm({handleLogin})}
+        </Grid>
       </Grid>
     </Grid>
   );

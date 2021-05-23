@@ -3,8 +3,10 @@ import { useHistory } from "react-router-dom";
 import {
   Grid,
   Typography,
+  Box,
   Button,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const preset = {
   register: {
@@ -19,15 +21,32 @@ const preset = {
   }
 }
 
+const useStyles = makeStyles(() => ({
+  routePadding: {
+    padding: '30px'
+  },
+  text: {
+    fontSize: '0.8rem',
+    color: 'grey'
+  }
+}));
+
 export default function AccessChange(props) {
+  const classes = useStyles();
   const history = useHistory();
   
   const route = preset[props.route];
 
   return (
-    <Grid container item justify="flex-end">
-      <Typography>{route.text}</Typography>
-      <Button color="primary" onClick={() => history.push(route.route)}>{route.button}</Button>
-    </Grid>
+    <Box width="80%" className={classes.routePadding}>
+      <Grid container item spacing={2} justify="flex-end" alignItems="baseline">
+        <Grid item>
+          <Typography className={classes.text}>{route.text}</Typography>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" color="primary" onClick={() => history.push(route.route)}>{route.button}</Button>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
