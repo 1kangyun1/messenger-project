@@ -4,6 +4,7 @@ router.use("/register", require('./register'));
 router.use("/login", require('./login'));
 
 router.delete("/logout", (req, res, next) => {
+  res.clearCookie('messenger-token', { httpOnly: true });
   res.sendStatus(204);
 });
 
