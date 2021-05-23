@@ -30,10 +30,8 @@ export default function AccessSide() {
         <Grid item>
           <img src={bubbleIcon} alt="React Logo" />
         </Grid>
-        <Grid container item justify="center">
-          <Typography className={classes.text}>Converse with anyone</Typography>
-          <Typography className={classes.text}>with any language</Typography>
-        </Grid>
+        <Typography className={classes.text}>Converse with anyone</Typography>
+        <Typography className={classes.text}>with any language</Typography>
       </Grid>
     </Box>
   )

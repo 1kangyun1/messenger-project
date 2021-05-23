@@ -29,7 +29,7 @@ const Login = (props) => {
       <Grid sm="5" item>
         {AccessSide()}
       </Grid>
-      <Grid sm="7" container item spacing={5} >
+      <Grid sm="7" container item>
         <Grid container item direction="column" justify="center" alignItems="center">
           {AccessChange({route: 'register'})}
         </Grid>

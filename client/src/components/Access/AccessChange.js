@@ -38,8 +38,8 @@ export default function AccessChange(props) {
   const route = preset[props.route];
 
   return (
-    <Box width="80%" className={classes.routePadding}>
-      <Grid container item spacing={2} justify="flex-end" alignItems="baseline">
+    <Box width="80%">
+      <Grid container item spacing={2} className={classes.routePadding} justify="flex-end" alignItems="baseline">
         <Grid item>
           <Typography className={classes.text}>{route.text}</Typography>
         </Grid>
