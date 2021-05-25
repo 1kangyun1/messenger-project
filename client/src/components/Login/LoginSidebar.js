@@ -9,20 +9,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import background from "../../img/bg-img.png";
 import bubbleIcon from '../../img/bubble.svg';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   image: {
-    backgroundImage:`linear-gradient(#3A8DFF85 10%, #86B9FF 90%), url(${background})`,
+    backgroundImage:`linear-gradient(
+      ${theme.palette.primary.main}85 10%, 
+      ${theme.palette.gradient.main} 90%), 
+      url(${background})`,
     backgroundSize:'cover',
     height: '100vh',
     margin: '0',
   },
-  text: {
-    fontSize: '1.5rem',
-    color: 'white'
-  }
+  text: theme.loginSidebar.text
 }));
 
-export default function AccessSide() {
+export default function LoginSidebar() {
   const classes = useStyles();
 
   return (

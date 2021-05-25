@@ -6,10 +6,10 @@ import {
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import { 
-  AccessSide, 
-  AccessChange,
+  LoginSidebar, 
+  LoginNavigation,
   RegisterForm,
-} from "./components/Access"
+} from "./components/Login"
 
 
 const Login = (props) => {
@@ -38,14 +38,18 @@ const Login = (props) => {
   return (
     <Grid container justify="space-between">
       <Grid sm={5} item>
-        {AccessSide()}
+        <LoginSidebar />
       </Grid>
       <Grid sm={7} container item>
         <Grid container item direction="column" alignItems="center">
-        {AccessChange({route: 'login'})}
+        <LoginNavigation 
+          text="Need to log in?" 
+          route='/login' 
+          button='Login' 
+        />
         </Grid>
         <Grid container item justify="center">
-          {RegisterForm({handleRegister, formErrorMessage})}
+          <RegisterForm handleRegister={handleRegister} formErrorMessage={formErrorMessage} />
         </Grid>
       </Grid>
     </Grid>
