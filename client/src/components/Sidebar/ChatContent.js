@@ -50,6 +50,9 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
+      <Box>
+        unread count
+      </Box>
     </Box>
   );
 };
