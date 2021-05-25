@@ -5,7 +5,12 @@ const {
 } = require("./onlineUsers");
 
 const socketHandler = (server) => {
-  const io = require("socket.io")(server);
+  const io = require("socket.io")(server, {
+    cors: {
+      origin: process.env.REQUEST_ORIGIN,
+      methods: ["GET", "POST"]
+    }
+  });
 
   io.on("connection", (socket) => {
     socket.on("go-online", (id) => {
