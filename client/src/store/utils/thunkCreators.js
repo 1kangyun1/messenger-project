@@ -63,7 +63,7 @@ export const logout = (id) => async (dispatch) => {
 
 export const fetchConversations = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("/api/conversations");
+    const { data } = await axios.get("/api/conversation/getConversations");
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);

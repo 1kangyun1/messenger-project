@@ -1,8 +1,7 @@
 const router = require("express").Router();
 
-router.use("/messages", require("./messages"));
-router.use("/conversation", require("./conversations"));
-router.use("/users", require("./users"));
+router.use("/getConversations", require("./getConversations"));
+router.use("/updateReadTime", require("./updateReadTime"));
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
