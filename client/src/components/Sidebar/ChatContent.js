@@ -51,7 +51,9 @@ const ChatContent = (props) => {
         </Typography>
       </Box>
       <Box>
-        unread count
+        <Typography className={classes.notification}>
+            2
+        </Typography>
       </Box>
     </Box>
   );
