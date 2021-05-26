@@ -1,7 +1,9 @@
+const { Conversation } = require("./db/models");
 const {
   checkOnlineUser,
   removeOnlineUser,
-  addOnlineUser
+  addOnlineUser,
+  getSocketId
 } = require("./onlineUsers");
 
 const socketHandler = (server) => {
@@ -13,28 +15,63 @@ const socketHandler = (server) => {
   });
 
   io.on("connection", (socket) => {
-    socket.on("go-online", (id) => {
+    socket.on("go-online", async (id) => {
       if (!checkOnlineUser(id)) {
-        addOnlineUser(id);
+        addOnlineUser(id, socket.id);
       }
-      // send the user who just went online to everyone else who is already online
-      socket.broadcast.emit("add-online-user", id);
+
+      joinRooms(socket, id);
     });
 
     socket.on("new-message", (data) => {
-      socket.broadcast.emit("new-message", {
-        message: data.message,
-        sender: data.sender,
-      });
+      sendMessage(io, socket, data); 
     });
 
     socket.on("logout", (id) => {
       if (checkOnlineUser(id)) {
         removeOnlineUser(id);
-        socket.broadcast.emit("remove-offline-user", id);
+        exitRooms(socket, id);
       }
     });
   });
+}
+
+const sendMessage = (io, socket, data) => {
+  const message = data.message;
+  const room = message.conversationId.toString();
+
+  socket.join(room);
+  if(checkOnlineUser(data.recipientId)){
+    io.sockets.connected[getSocketId(data.recipientId)].join(room);
+  }
+
+  socket.to(room).emit("new-message", {
+    message: data.message,
+    sender: data.sender,
+  });
+}
+
+const exitRooms = (socket, userId) => {
+  for(let room of socket.rooms){
+    socket.to(room).emit("remove-offline-user", userId);
+  }
+}
+
+const joinRooms = (socket, userId) => {
+  Conversation.listConversations(userId)
+  .then(conversations => {
+    const rooms = conversations.map(conversation => {
+      return conversation.id.toString();
+    })
+    socket.join(rooms);
+
+    for(let room of rooms){
+      socket.to(room).emit("add-online-user", userId);
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 module.exports = socketHandler;

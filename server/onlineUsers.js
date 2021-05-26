@@ -1,19 +1,24 @@
-const onlineUsers = new Set();
+const onlineUsers = {};
 
-const checkOnlineUser = (id) => {
-  return onlineUsers.has(id);
+const checkOnlineUser = (userId) => {
+  return onlineUsers.hasOwnProperty(userId);
 }
 
-const removeOnlineUser = (id) => {
-  return onlineUsers.delete(id);
+const removeOnlineUser = (userId) => {
+  return delete onlineUsers[userId];
 }
 
-const addOnlineUser = (id) => {
-  return onlineUsers.add(id);
+const addOnlineUser = (userId, socketId) => {
+  return onlineUsers[userId] = socketId;
+}
+
+const getSocketId = (userId) => {
+  return onlineUsers[userId];
 }
 
 module.exports = {
   checkOnlineUser,
   removeOnlineUser,
-  addOnlineUser
+  addOnlineUser,
+  getSocketId
 };
