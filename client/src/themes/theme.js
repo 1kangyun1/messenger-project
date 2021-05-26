@@ -20,7 +20,7 @@ export const theme = createMuiTheme({
   loginNavigation: {
     navigationBar: {
       paddingTop: '25px',
-      paddingBottom: '10px'
+      paddingBottom: '50px'
     },
     text: {
       fontSize: '0.8rem'

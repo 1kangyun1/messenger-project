@@ -5,11 +5,12 @@ import {
   Typography,
   Box,
   Button,
+  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  routePadding: theme.loginNavigation,
+  routePadding: theme.loginNavigation.navigationBar,
   text: {
     fontSize: theme.loginNavigation.text,
     color: theme.palette.secondary.main
@@ -27,13 +28,15 @@ export default function LoginNavigation(props) {
           <Typography className={classes.text}>{props.text}</Typography>
         </Grid>
         <Grid item>
-          <Button 
-            variant="outlined" 
-            color="primary" 
-            onClick={() => history.push(props.route)}
-          >
-            {props.button}
-          </Button>
+          <Paper elevation={2}>
+            <Button 
+              variant="outlined" 
+              color="primary" 
+              onClick={() => history.push(props.route)}
+            >
+              {props.button}
+            </Button>
+          </Paper>
         </Grid>
       </Grid>
     </Box>

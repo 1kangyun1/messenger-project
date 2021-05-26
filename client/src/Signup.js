@@ -41,12 +41,12 @@ const Login = (props) => {
         <LoginSidebar />
       </Grid>
       <Grid sm={7} container item>
-        <Grid container item direction="column" alignItems="center">
-        <LoginNavigation 
-          text="Need to log in?" 
-          route='/login' 
-          button='Login' 
-        />
+        <Grid container item direction="column" justify="center" alignItems="center">
+          <LoginNavigation 
+            text="Need to log in?" 
+            route='/login' 
+            button='Login' 
+          />
         </Grid>
         <Grid container item justify="center">
           <RegisterForm handleRegister={handleRegister} formErrorMessage={formErrorMessage} />

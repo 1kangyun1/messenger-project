@@ -29,7 +29,7 @@ export default function LoginSidebar() {
     <Box display={{ xs: 'none', sm: 'block' }}>
       <Grid container spacing={2} className={classes.image} direction="column" justify="center" alignItems="center">
         <Grid item>
-          <img src={bubbleIcon} alt="React Logo" />
+          <img src={bubbleIcon} alt="Message Icon" />
         </Grid>
         <Typography className={classes.text}>Converse with anyone</Typography>
         <Typography className={classes.text}>with any language</Typography>
