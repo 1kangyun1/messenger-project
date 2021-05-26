@@ -7,18 +7,34 @@ export const theme = createMuiTheme({
     button: {
       textTransform: "none",
       letterSpacing: 0,
-      fontWeight: "bold"
+      fontWeight: "regular"
     }
   },
   overrides: {
     MuiInput: {
       input: {
-        fontWeight: "bold"
+        fontWeight: "regular"
       }
+    }
+  },
+  loginNavigation: {
+    navigationBar: {
+      paddingTop: '25px',
+      paddingBottom: '50px'
+    },
+    text: {
+      fontSize: '0.8rem'
+    }
+  },
+  loginSidebar: {
+    text: {
+      fontSize: '1.5rem',
+      color: 'white'
     }
   },
   palette: {
     primary: { main: "#3A8DFF" },
-    secondary: { main: "#B0B0B0" }
+    secondary: { main: "#B0B0B0" },
+    gradient: { main: "#86B9FF" }
   }
 });
