@@ -7,7 +7,7 @@ const Messages = (props) => {
   const { messages, otherUser, userId } = props;
 
   return (
-    <Grid container direction="column-reverse">
+    <Grid container direction="column">
       {messages.map(( message) => {
         const time = moment(message.createdAt).format("h:mm");
 
