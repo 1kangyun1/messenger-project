@@ -49,7 +49,9 @@ const sendMessage = (io, socket, data) => {
 
   socket.join(room);
   if(checkOnlineUser(data.recipientId)){
-    io.sockets.connected[getSocketId(data.recipientId)].join(room);
+    for(let socketId of getSocketId(data.recipientId)){
+      io.sockets.connected[socketId].join(room);  
+    }
   }
 
   socket.to(room).emit("new-message", {

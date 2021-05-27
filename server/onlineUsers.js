@@ -9,7 +9,12 @@ const removeOnlineUser = (userId) => {
 }
 
 const addOnlineUser = (userId, socketId) => {
-  return onlineUsers[userId] = socketId;
+  if(checkOnlineUser(userId)){
+    return onlineUsers[userId].push(userId);
+  }
+  else{
+    return onlineUsers[userId] = [socketId];
+  }
 }
 
 const getSocketId = (userId) => {
