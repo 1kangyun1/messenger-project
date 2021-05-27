@@ -1,3 +1,5 @@
+const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 const { Conversation } = require("./db/models");
 const {
   checkOnlineUser,
@@ -5,6 +7,7 @@ const {
   addOnlineUser,
   getSocketId
 } = require("./onlineUsers");
+const checkSession = require('./routes/session');
 
 const socketHandler = (server) => {
   const io = require("socket.io")(server, {
@@ -13,6 +16,17 @@ const socketHandler = (server) => {
       methods: ["GET", "POST"]
     }
   });
+
+  io.use((socket, next) => {
+    const token = cookie.parse(socket.handshake.headers.cookie)['messenger-token'];
+    
+    jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
+      if(err){
+        next(new Error("not authorized"));
+      }
+      next();
+    })
+  })
 
   io.on("connection", (socket) => {
     socket.on("go-online", async (id) => {
@@ -29,8 +43,9 @@ const socketHandler = (server) => {
 
     socket.on("logout", (id) => {
       if (checkOnlineUser(id)) {
-        removeOnlineUser(id);
-        exitRooms(socket, id);
+        if(removeOnlineUser(id, socket.id)){
+          exitRooms(socket, id);
+        }
       }
     });
   });
@@ -42,7 +57,9 @@ const sendMessage = (io, socket, data) => {
 
   socket.join(room);
   if(checkOnlineUser(data.recipientId)){
-    io.sockets.connected[getSocketId(data.recipientId)].join(room);
+    for(let socketId of getSocketId(data.recipientId)){
+      io.sockets.connected[socketId].join(room);  
+    }
   }
 
   socket.to(room).emit("new-message", {
