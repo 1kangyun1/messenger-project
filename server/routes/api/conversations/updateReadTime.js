@@ -9,6 +9,10 @@ router.post("/", async (req, res) => {
   const senderId = req.user.id;
   const { recipientId, conversationId, readTime } = req.body;
 
+  if(!recipientId || !conversationId || !readTime){
+    return res.sendStatus(400);
+  }
+
   const response = await Conversation.findConversation(
     senderId,
     recipientId
@@ -27,7 +31,9 @@ router.post("/", async (req, res) => {
       conversation.user2ReadTime = readTime;
     }
 
-    conversation.save()
+    return conversation.save();
+  })
+  .then(res => {
     return { success: 'Last read time for user has been updated' };
   })
   .catch(err => {

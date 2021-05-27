@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  setReadTime
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -61,6 +62,18 @@ export const logout = (id) => async (dispatch) => {
 
 // CONVERSATIONS THUNK CREATORS
 
+export const updateReadTime = (body) => (dispatch) => {
+  const conversation = {
+    ...body,
+    readTime: new Date().toISOString()
+  }
+
+  axios.post("/api/conversation/updateReadTime", conversation).catch((error) => {
+    console.error(error);
+  });
+  dispatch(setReadTime(conversation));
+};
+
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversation/getConversations");
@@ -71,7 +84,10 @@ export const fetchConversations = () => async (dispatch) => {
 };
 
 const saveMessage = async (body) => {
-  const { data } = await axios.post("/api/messages", body);
+  const { data } = await axios.post("/api/messages", {
+    ...body,
+    readTime: Date.now()
+  });
   return data;
 };
 
