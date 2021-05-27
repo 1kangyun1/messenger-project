@@ -1,4 +1,5 @@
 const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 const { Conversation } = require("./db/models");
 const {
   checkOnlineUser,
@@ -17,8 +18,14 @@ const socketHandler = (server) => {
   });
 
   io.use((socket, next) => {
-    const token = cookie.parse(socket.handshake.headers.cookie);
-    checkSession({ cookies: token }, null, next);
+    const token = cookie.parse(socket.handshake.headers.cookie)['messenger-token'];
+    
+    jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
+      if(err){
+        next(new Error("not authorized"));
+      }
+      next();
+    })
   })
 
   io.on("connection", (socket) => {
@@ -36,8 +43,9 @@ const socketHandler = (server) => {
 
     socket.on("logout", (id) => {
       if (checkOnlineUser(id)) {
-        removeOnlineUser(id);
-        exitRooms(socket, id);
+        if(removeOnlineUser(id, socket.id)){
+          exitRooms(socket, id);
+        }
       }
     });
   });
