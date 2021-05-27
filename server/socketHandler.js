@@ -1,3 +1,4 @@
+const cookie = require("cookie");
 const { Conversation } = require("./db/models");
 const {
   checkOnlineUser,
@@ -5,6 +6,7 @@ const {
   addOnlineUser,
   getSocketId
 } = require("./onlineUsers");
+const checkSession = require('./routes/session');
 
 const socketHandler = (server) => {
   const io = require("socket.io")(server, {
@@ -13,6 +15,11 @@ const socketHandler = (server) => {
       methods: ["GET", "POST"]
     }
   });
+
+  io.use((socket, next) => {
+    const token = cookie.parse(socket.handshake.headers.cookie);
+    checkSession({ cookies: token }, null, next);
+  })
 
   io.on("connection", (socket) => {
     socket.on("go-online", async (id) => {

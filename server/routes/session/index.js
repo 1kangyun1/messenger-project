@@ -6,7 +6,7 @@ const checkSession = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
       if (err) {
-        return next();
+        return next(new Error("not authorized"));
       }
       User.findOne({
         where: { id: decoded.id },
@@ -16,7 +16,7 @@ const checkSession = (req, res, next) => {
       });
     });
   } else {
-    return next();
+    return next(new Error("not authorized"));
   }
 }
 
