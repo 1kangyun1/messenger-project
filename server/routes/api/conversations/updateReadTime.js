@@ -25,15 +25,16 @@ router.post("/", async (req, res) => {
     }
 
     if(conversation.user1Id === senderId){
-      conversation.user1ReadTime = readTime;
+      conversation.update({
+        user1ReadTime: readTime
+      });
     }
     else{
-      conversation.user2ReadTime = readTime;
+      conversation.update({
+        user2ReadTime: readTime
+      });
     }
-
-    return conversation.save();
-  })
-  .then(res => {
+    
     return { success: 'Last read time for user has been updated' };
   })
   .catch(err => {
