@@ -1,5 +1,32 @@
+export const addConversationToStore = (state, payload) => {
+  return payload.map((convo) => {
+    convo.unreadCount = countUnreadMessages(convo);
+
+    return convo;
+  })  
+}
+
+const countUnreadMessages = (conversation) => {
+  const messages = conversation.messages;
+  const otherUserId = conversation.otherUser.id;
+  const readTime = new Date(conversation.otherUser.id === conversation.user1Id ? 
+    conversation.user2ReadTime : 
+    conversation.user1ReadTime);
+  let unreadCount = 0;
+    
+  for(let message of messages){
+    if(message.senderId === otherUserId && new Date(message.createdAt) > readTime){
+      unreadCount++;
+    }
+    else{
+      break;
+    }
+  }
+
+  return unreadCount;
+}
+
 export const setReadTimeToStore = (state, payload) => {
-  console.log(payload)
   const { recipientId, conversationId, readTime } = payload;
   
   return state.map((convo) => {
@@ -12,6 +39,8 @@ export const setReadTimeToStore = (state, payload) => {
       else{
         convoCopy.user1ReadTime = readTime;
       }
+
+      convoCopy.unreadCount = 0;
 
       return convoCopy;
     }
@@ -31,14 +60,17 @@ export const addMessageToStore = (state, payload) => {
       messages: [message],
     };
     newConvo.latestMessageText = message.text;
+    newConvo.unreadCount = 1;
     return [newConvo, ...state];
   }
-
+  
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
       const convoCopy = { ...convo };
       convoCopy.messages.unshift(message);
       convoCopy.latestMessageText = message.text;
+
+      convoCopy.unreadCount = countUnreadMessages(convoCopy);
 
       return convoCopy;
     } else {
