@@ -17,7 +17,7 @@ const removeOnlineUser = (userId, socketId) => {
 }
 
 const addOnlineUser = (userId, socketId) => {
-  if(onlineUsers.hasOwnProperty(userId)){
+  if(checkOnlineUser(userId)){
     return onlineUsers[userId].push(userId);
   }
   else{
