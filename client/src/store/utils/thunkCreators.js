@@ -68,10 +68,13 @@ export const updateReadTime = (body) => (dispatch) => {
     readTime: new Date().toISOString()
   }
 
-  axios.post("/api/conversation/updateReadTime", conversation).catch((error) => {
+  axios.post("/api/conversation/updateReadTime", conversation)
+  .then(() => {
+    dispatch(setReadTime(conversation));
+  })
+  .catch((error) => {
     console.error(error);
   });
-  dispatch(setReadTime(conversation));
 };
 
 export const fetchConversations = () => async (dispatch) => {

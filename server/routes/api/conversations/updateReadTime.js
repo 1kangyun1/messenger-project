@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { response } = require("express");
 const { Conversation } = require("../../../db/models");
 
 router.post("/", async (req, res) => {

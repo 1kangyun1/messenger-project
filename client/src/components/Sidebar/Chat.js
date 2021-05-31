@@ -22,7 +22,6 @@ const styles = {
 
 class Chat extends Component {
   componentDidUpdate(prevProps) {
-    console.log(prevProps)
     if(this.props.conversation.unreadCount !== prevProps.conversation.unreadCount){
       this.props.updateReadTime({
         recipientId: this.props.conversation.otherUser.id,
