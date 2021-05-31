@@ -31,7 +31,7 @@ export const setReadTimeToStore = (state, payload) => {
   
   return state.map((convo) => {
     if (convo.id === conversationId) {
-      const convoCopy = { ...convo };
+      const convoCopy = copyConversation(convo);
 
       if(convo.user1Id === recipientId){
         convoCopy.user2ReadTime = readTime;
@@ -50,6 +50,19 @@ export const setReadTimeToStore = (state, payload) => {
   })
 }
 
+const copyConversation = (conversation) => {
+  let copy = { ...conversation };
+
+  copy.otherUser = { ...conversation.otherUser };
+  
+  copy.messages = [];
+  for(let message of conversation.messages){
+    copy.messages.push({ ...message });
+  }
+
+  return copy;
+}
+
 export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
   // if sender isn't null, that means the message needs to be put in a brand new convo
@@ -66,7 +79,7 @@ export const addMessageToStore = (state, payload) => {
   
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
-      const convoCopy = { ...convo };
+      const convoCopy = copyConversation(convo);
       convoCopy.messages.unshift(message);
       convoCopy.latestMessageText = message.text;
 
@@ -82,7 +95,7 @@ export const addMessageToStore = (state, payload) => {
 export const addOnlineUserToStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
-      const convoCopy = { ...convo };
+      const convoCopy = copyConversation(convo);
       convoCopy.otherUser.online = true;
       return convoCopy;
     } else {
@@ -94,7 +107,7 @@ export const addOnlineUserToStore = (state, id) => {
 export const removeOfflineUserFromStore = (state, id) => {
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
-      const convoCopy = { ...convo };
+      const convoCopy = copyConversation(convo);
       convoCopy.otherUser.online = false;
       return convoCopy;
     } else {
