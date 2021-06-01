@@ -1,8 +1,18 @@
-const { Op } = require("sequelize");
+const { Op, DataTypes } = require("sequelize");
 const db = require("../db");
-const Message = require("./message");
 
-const Conversation = db.define("conversation", {});
+const Conversation = db.define("conversation", {
+  user1ReadTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: '2021-01-01 01:01:01.973-04'
+  },
+  user2ReadTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: '2021-01-01 01:01:01.973-04'
+  }
+});
 
 // find conversation given two user Ids
 

@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { User, Conversation, Message } = require("../../db/models");
+const { User, Conversation, Message } = require("../../../db/models");
 const { Op } = require("sequelize");
-const { checkOnlineUser } = require("../../onlineUsers");
+const { checkOnlineUser } = require("../../../onlineUsers");
 
 // get all conversations for a user, include latest message text for preview, and all messages
 // include other user model so we have info on username/profile pic (don't include current user info)
@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
           user2Id: userId,
         },
       },
-      attributes: ["id"],
+      attributes: ["id", "user1Id", "user2Id", "user1ReadTime", "user2ReadTime"],
       order: [[Message, "createdAt", "DESC"]],
       include: [
         { model: Message, order: ["createdAt", "DESC"] },

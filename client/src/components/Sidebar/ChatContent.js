@@ -38,7 +38,7 @@ const ChatContent = (props) => {
   const classes = useStyles();
 
   const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { latestMessageText, otherUser, unreadCount } = conversation;
 
   return (
     <Box className={classes.root}>
@@ -50,8 +50,21 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
+      <Box>
+        {unreadDisplay(unreadCount, classes)}
+      </Box>
     </Box>
   );
 };
+
+const unreadDisplay = (unreadCount, classes) => {
+  if(unreadCount > 0){
+    return (
+      <Typography className={classes.notification}>
+        {unreadCount}
+      </Typography>
+    )
+  }
+}
 
 export default ChatContent;
